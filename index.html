@@ -7,24 +7,30 @@
 
     <link rel="icon" type="image/png" href="favico.png">
     <link rel="shortcut icon" type="image/png" href="favico.png">
-
+    <link href="https://fonts.cdnfonts.com/css/minus" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.0.0/ol.css">
     <link href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.0.0/dist/ol.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.js"></script>
-    
-    <style>
 
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/minus');
+        .minus { font-family: 'minus', sans-serif; }
+        .barre {
+            text-decoration:  wavy line-through red;
+        }
     </style>
+
+
 
   </head>
 <body>
-
+    <h1 class="minus">Les jeux Olympiques de <span class="barre">Paris</span> bourges</h1>
     <div id="map" style="width:600px; height:400px;"></div>
 
 <script>
 
-    
+
 // The map
 var map = new ol.Map({
     target: 'map',
