@@ -72,20 +72,34 @@ select * from data.paris where ville = 'Marseille (13)'
 
 
 -- Par site en geojson
+-- Par site en geojson
+with datas as (
+	select * from (
+		select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess,
+		1 as hasmedal,
+		count(distinct discipline) nbdisc, count(distinct debut) nbdates, 
+		round(sum(prix_moyen*capacite) / sum(capacite), 2) prix_moy, array_agg(distinct jeux) jeux, array_agg(distinct capacite) capacite,
+		array_agg(distinct discipline order by discipline) disc
+		from data.paris p
+		where enjeu = 'Médailles' and prix_moyen is not null and jeux = 'Olympiques' 
+		group by lieu 
+		union 
+		select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess, 
+		0 as hasmedal,
+		count(distinct discipline) nbdisc, count(distinct debut) nbdates, 
+		round(sum(prix_moyen*capacite) / sum(capacite), 2) prix_moy, array_agg(distinct jeux) jeux, array_agg(distinct capacite) capacite,
+		array_agg(distinct discipline order by discipline) disc
+		from data.paris p
+		where enjeu != 'Médailles' and prix_moyen is not null and jeux = 'Olympiques' 
+		group by lieu 
+	) u
+	order by prix_moy desc
+)
 SELECT json_build_object(
     'type', 'FeatureCollection',
     'features', json_agg(ST_AsGeoJSON(t.*)::json)
     )
-from (
-select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess, 
-count(distinct discipline) nbdisc, count(distinct debut) nbdates, 
-round(sum(prix_moyen*capacite) / sum(capacite), 2) prix_moy, array_agg(distinct jeux) jeux,
-array_agg(distinct discipline order by discipline) disc
-from data.paris p
-where enjeu = 'Médailles' and prix_moyen is not null
-group by lieu 
-order by prix_moy desc ) 
-as t
+from datas as t
 
 -- Par site
 select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess, 

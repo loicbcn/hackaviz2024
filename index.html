@@ -12,26 +12,83 @@
     <link href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.0.0/dist/ol.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.js"></script>
-
+    <script src="https://unpkg.com/rough-viz@2.0.5"></script>
+    <script src="data/datas.js"></script>
     <style>
         @import url('https://fonts.cdnfonts.com/css/minus');
-        .minus { font-family: 'minus', sans-serif; }
-        .barre {
-            text-decoration:  wavy line-through red;
+        html {
+            font-size: 62.5%;
+            font-size: .625em;
+            flex-direction: column;
+            box-sizing: border-box;
         }
+        .minus { font-family: 'minus', sans-serif; }
+        .indie { font-family: indie_flowerregular, sans-serif; }
+        .gaegu { font-family: 'gaeguregular', sans-serif; }
+
+        body { font-family: indie_flowerregular, sans-serif; }
+        .barre { text-decoration:  wavy line-through red; }
+        .barredouble { text-decoration:  double line-through red; }
+
+        h1 { font-size: 3rem; text-align:center; }
+        .title_rub { font-size: 2.6rem; font-family: 'minus', sans-serif; }
+
+        .cross {
+        position: relative;
+        display: inline-block;
+        }
+        .cross::before, .cross::after {
+        content: '';
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        }
+        .cross::before {
+        border-bottom: 2px solid red;
+        -webkit-transform: skewY(-10deg);
+        transform: skewY(-10deg);
+        }
+        .cross::after {
+        border-bottom: 2px solid red;
+        -webkit-transform: skewY(10deg);
+        transform: skewY(10deg);
+        }
+
+        #sites_prix_medals text { font-size: 1.6rem !important;}
+
     </style>
-
-
-
   </head>
 <body>
-    <h1 class="minus">Les jeux Olympiques de <span class="barre">Paris</span> bourges</h1>
-    <div id="map" style="width:600px; height:400px;"></div>
+    <h1>
+        <span class="cross">Dash</span><!--
+        --><span class="minus" style="font-size:3.4rem">Trash</span><!--
+        -->board des jeux Olympiques de <span class="cross">Paris</span> <!--
+        --><span class="minus" style="font-size:3.4rem">bourges</span> 2024
+    </h1>
+    <!--<div id="map" style="width:400px; height:400px;"></div>-->
 
+    <h2 class="title_rub">Prix moyens par sites <span class="indie"> ... elles sont chères mes médailles</span></h2>
+    <p class="indie" style="font-size: 1.8rem;">
+        La différence de prix entre épreuves de qualification et épreuves finales est parfois très 
+        importante. Jusqu'à plus de <strong>200%</strong> d'augmentation sur certains sites comme 
+        le Parc des Princes ou Roland-Garros.  
+<br>
+        La marina de Marseille, pour les épreuves de voile, est le seul site où toutes les places sont 
+        au même tarif: <strong>24€</strong>. C'est aussi le tarif le plus abordable de ces jeux...
+    </p><p class="indie" style="font-size: 1.8rem;">
+        Comme pour les sportifs qui ne verront aucune médaille, on peut répéter aux spectateurs 
+        peu fortunés cette célèbre phrase de Pierre de Coubertin (qui n'a pas que dit des 
+        choses intelligentes): <strong>L'important, c'est de participer</strong>.
+    </p>
+    <strong style="background-color: coral; font-size:1.4rem; padding:0 1rem;" class="indie">Épreuves avec obtention de médailles</strong>
+    <strong style="background-color: skyblue; font-size:1.4rem; padding:0 1rem;" class="indie">Épreuves de qualification</strong>
+    <div id="sites_prix_medals" style="width: 100%; height: 600px;"></div>
+    <script type="module" src="js/scripts.js"></script>
 <script>
 
-
 // The map
+/*
 var map = new ol.Map({
     target: 'map',
     view: new ol.View({
@@ -42,6 +99,8 @@ var map = new ol.Map({
     new ol.layer.Tile({ source: new ol.source.OSM() }),
     ]
 });
+*/
+
 
 </script>
 </body>
