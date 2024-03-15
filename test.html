@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://unpkg.com/rough-viz@2.0.5"></script>
+  <style>
+	    .wrapper {
+	      display: flex;
+	      flex: wrap;
+        order: row;
+	    }
+  </style>
+</head>
+ 
+<body>
+  <br><br>
+  <div class="wrapper">
+    <div id="vis0" style="width:600px; height:600px;"></div>
+    </div>
+  <script> 
+    
+new roughViz.Scatter(
+  {
+    element: '#vis0',
+    data: 'data/disciplines_prix.csv?2',
+    x: 'capa_moy',
+    y: 'prix_moy',
+    colorVar: 'has_medal',
+    highlightLabel: 'discipline',
+    fillWeight: 2,
+    fillStyle:'hachure',
+    //radius:'logsess',
+    colors: ['skyblue', 'coral'],
+    stroke: 'black',
+    strokeWidth: 0.4,
+    roughness: 1,
+    font: 0,
+    xLabel: 'Capacité moyenne du lieu de l\'épreuve (en millier de spectateurs)',
+    yLabel: 'Prix moyens des billets (€)',
+    //curbZero: false,
+});
+
+
+  </script>
+</body>
+   

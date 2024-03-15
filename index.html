@@ -7,31 +7,21 @@
 
     <link rel="icon" type="image/png" href="favico.png">
     <link rel="shortcut icon" type="image/png" href="favico.png">
+    <link href=" https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/sketchy/bootstrap.min.css " rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minus" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.0.0/ol.css">
     <link href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.0.0/dist/ol.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.js"></script>
     <script src="https://unpkg.com/rough-viz@2.0.5"></script>
-    <script src="data/datas.js"></script>
+    <script src="data/datas.js?12"></script>
     <style>
         @import url('https://fonts.cdnfonts.com/css/minus');
-        html {
-            font-size: 62.5%;
-            font-size: .625em;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-        .minus { font-family: 'minus', sans-serif; }
-        .indie { font-family: indie_flowerregular, sans-serif; }
-        .gaegu { font-family: 'gaeguregular', sans-serif; }
 
-        body { font-family: indie_flowerregular, sans-serif; }
+        .minus { font-family: 'minus', sans-serif; }
+
         .barre { text-decoration:  wavy line-through red; }
         .barredouble { text-decoration:  double line-through red; }
-
-        h1 { font-size: 3rem; text-align:center; }
-        .title_rub { font-size: 2.6rem; font-family: 'minus', sans-serif; }
 
         .cross {
         position: relative;
@@ -55,36 +45,106 @@
         transform: skewY(10deg);
         }
 
-        #sites_prix_medals text { font-size: 1.6rem !important;}
+        #sites_prix_medals text { font-size: 1rem !important;}
 
     </style>
   </head>
 <body>
-    <h1>
-        <span class="cross">Dash</span><!--
-        --><span class="minus" style="font-size:3.4rem">Trash</span><!--
-        -->board des jeux Olympiques de <span class="cross">Paris</span> <!--
-        --><span class="minus" style="font-size:3.4rem">bourges</span> 2024
-    </h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="lg-12">
+        <h1>
+            <span class="cross">Dash</span><!--
+            --><span class="minus" style="font-size:3.4rem">Trash</span><!--
+            -->board des jeux Olympiques de <span class="cross">Paris</span> <!--
+            --><span class="minus" style="font-size:3.4rem">bourges</span> 2024
+        </h1>
+        </div>
+    </div>
     <!--<div id="map" style="width:400px; height:400px;"></div>-->
+    <div class="row">
+        <div class="lg-12">
+        <h2 class="title_rub">Prix moyens<sup>(1)</sup>  par sites ... elles sont chères mes médailles</h2>
+        <p>
+            La différence de prix entre épreuves de qualification et épreuves finales est parfois très 
+            importante. Jusqu'à plus de <span class="badge bg-danger">300%</span> d'augmentation sur certains sites comme 
+            le Parc des Princes (<span class="badge bg-danger">+313%</span>) 
+            ou Roland-Garros (<span class="badge bg-danger">+326%</span>) ... 
+            Et seulement <span class="badge bg-warning text-black">+213%</span> pour le stade de France 👍.  
+        <br>
+            La Marina de Marseille, pour les épreuves de voile, est le seul site où toutes les places sont 
+            au même tarif: <span class="badge bg-success">24€</span>. C'est aussi le tarif le plus abordable de ces jeux...
+        </p><p>
+            Comme pour les sportifs qui ne verront aucune médaille, on peut répéter aux spectateurs 
+            peu fortunés cette célèbre phrase de Pierre de Coubertin (qui n'a pas que dit des 
+            choses intelligentes): <strong style="transform: rotate(-4deg);" class="badge bg-primary minus fs-6">L'important, c'est de participer</strong>
+        </p>
+        </div>
+    </div>
 
-    <h2 class="title_rub">Prix moyens par sites <span class="indie"> ... elles sont chères mes médailles</span></h2>
-    <p class="indie" style="font-size: 1.8rem;">
-        La différence de prix entre épreuves de qualification et épreuves finales est parfois très 
-        importante. Jusqu'à plus de <strong>200%</strong> d'augmentation sur certains sites comme 
-        le Parc des Princes ou Roland-Garros.  
-<br>
-        La marina de Marseille, pour les épreuves de voile, est le seul site où toutes les places sont 
-        au même tarif: <strong>24€</strong>. C'est aussi le tarif le plus abordable de ces jeux...
-    </p><p class="indie" style="font-size: 1.8rem;">
-        Comme pour les sportifs qui ne verront aucune médaille, on peut répéter aux spectateurs 
-        peu fortunés cette célèbre phrase de Pierre de Coubertin (qui n'a pas que dit des 
-        choses intelligentes): <strong>L'important, c'est de participer</strong>.
+    <div class="row">
+        <div class="lg-12">
+            <div id="sites_prix_medals" style="width: 100%; height: 600px;"></div>
+            <div class="text-end">
+                <strong class="badge bg-primary text-black" style="background-color: coral !important;">Épreuves avec obtention de médailles</strong>
+                <strong class="badge bg-primary text-black" style="background-color: skyblue !important;">Épreuves de qualification</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="lg-12">
+            <h2 class="title_rub">Prix moyens par sport, capacités des enceintes et médailles 
+                <sup class="minus" style="display:inline-block; transform: rotate(12deg);"><small>encore</small></sup>
+            </h2>
+<p>
+    Les prix les bas se concentrent principalement sur les sites de faibles capacités 
+    (moins de 20 000 places) et plutôt sur des épreuves sans médailles.<br>
+    7 épreuves proposent des prix inférieurs à <span class="badge bg-info">50€</span> dont 5 donneront 
+    lieu à des remises de médailles 
+    <span style="transform: rotate(-4deg);" class="badge bg-primary minus">yes</span>.
+</p>
+<p>
+    La <u>natation marathon</u> avec <span class="badge bg-info">2000 places à 33€</span><sup>(2)</sup> , 
+    le <u>VTT</u> <span class="badge bg-success">30 000 places à 24€</span>, 
+    la <u>Voile</u> <span class="badge bg-success">60 000 places à 24€</span>, 
+    le<u>cyclisme sur route</u> <span class="badge bg-success">18 000 places à 24€</span>
+     et le <u>tir</u> à <span class="badge bg-info">45€</span>
     </p>
-    <strong style="background-color: coral; font-size:1.4rem; padding:0 1rem;" class="indie">Épreuves avec obtention de médailles</strong>
-    <strong style="background-color: skyblue; font-size:1.4rem; padding:0 1rem;" class="indie">Épreuves de qualification</strong>
-    <div id="sites_prix_medals" style="width: 100%; height: 600px;"></div>
-    <script type="module" src="js/scripts.js"></script>
+    <p>
+    Hormis ces disciplines, il faudra ensuite dépenser plus de <span class="badge bg-danger">100€</span> 
+    pour voir des médailles. et ce sera étonnamment du golf à <span class="badge bg-warning text-black">118€</span>.
+</p>
+
+            <div id="scatter_prix_discip" style="width:100%; height:600px;"></div>
+            <div class="text-end">
+                <strong class="badge bg-primary text-black" style="background-color: coral !important;">Épreuves avec obtention de médailles</strong>
+                <strong class="badge bg-primary text-black" style="background-color: skyblue !important;">Épreuves de qualification</strong>
+            </div>
+        </div>
+    </div>
+
+
+<div class="alert alert-primary mt-5">
+<strong>(1) Prix moyen:</strong> Pour chaque épreuve, un prix moyen a été calculé. 
+Il s'agit d'une moyenne pondérée des prix des catégories First, A, B, C et D. 
+J'ai établi ces pondérations à partir des représentations des enceintes fournies dans la 
+<a href="https://tickets.paris2024.org/obj/media/FR-Paris2024/grille-tarifaire.pdf">grille tarifaire</a>, 
+en comptant le nombre de pixels <span style="transform: rotate(-4deg);" class="badge bg-primary minus">a la main</span> pour chaque catégorie.
+Je n'ai conservé qu'une seule répartition des prix qui me semblait raisonnable:<br>
+categorie_first: 10%', categorie_a: 35%, categorie_b: 30%, categorie_c: 15%, categorie_d: 10% ... 
+Si j'avais eu plus de temps, j'aurais fait mieux.<span style="transform: rotate(4deg);" class="badge bg-primary minus fs-5">Mais bien sur</span>
+<hr>
+<strong>(2) Nombre de places:</strong> Il s'agit d'une estimation, calculée en multipliant 
+la capacité moyenne des enceintes hébergeant une discipline par le nombre de sessions de cette discipline.
+<br>
+Par exemple, pour la voile: capacité moyenne des enceintes: 12262 * 5 sessions ≈ 60 000 
+
+</div>
+
+</div>
+
+<script type="module" src="js/scripts.js"></script>
 <script>
 
 // The map

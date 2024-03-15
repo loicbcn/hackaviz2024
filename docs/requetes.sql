@@ -40,12 +40,36 @@ select session, max(jeux||'-'||discipline) , count(distinct genre) nbgenre, coun
 round(sum(prix_moyen*capacite) / sum(capacite), 2) prix_moy, array_agg(distinct ville) ville,
 max(capacite) capacite
 from data.paris
-where prix_moyen is not null and discipline != 'Cérémonie'
+where prix_moyen is not null and discipline != 'Cérémonie' and enjeu = 'Médailles' and jeux = 'Olympiques' 
 group by session
 order by nb desc, nbgenre desc
 
+select session, max(jeux||'-'||discipline) , count(distinct genre) nbgenre, count(*) nb, 
+round(sum(prix_moyen*capacite) / sum(capacite), 2) prix_moy, array_agg(distinct ville) ville,
+max(capacite) capacite
+from data.paris
+where prix_moyen is not null and discipline != 'Cérémonie' and enjeu != 'Médailles' and jeux = 'Olympiques' 
+group by session
+order by nb desc, nbgenre desc
 
-select *  from data.paris where session = 'TEN27'
+with datasmed as(
+	select discipline, 1 as has_medal, round(avg(prix_moyen)) prix_moy, round(avg(capacite)) capa_moy, count(distinct session) sessions
+	from data.paris 
+	where discipline != 'Cérémonie' and jeux = 'Olympiques' and prix_moyen is not null and enjeu = 'Médailles'
+	group by discipline 
+), datasnomed as(
+	select discipline, 0 as has_medal, round(avg(prix_moyen)) prix_moy, round(avg(capacite)) capa_moy, count(distinct session) sessions
+	from data.paris 
+	where discipline != 'Cérémonie' and jeux = 'Olympiques' and prix_moyen is not null and enjeu != 'Médailles'
+	group by discipline 
+)
+select discipline, concat(discipline, ' - ',  prix_moy, '€<br>', 'Sessions:', sessions, '<br>Places moy: ', capa_moy) labels, 
+has_medal, prix_moy, sessions,  round(capa_moy/1000) capa_moy, sessions*capa_moy capa, capa_moy capa_moy_full
+from (
+select * from datasmed
+union
+select * from datasnomed
+) d order by prix_moy desc
 
 -----------------------------------------
 
@@ -72,9 +96,7 @@ select * from data.paris where ville = 'Marseille (13)'
 
 
 -- Par site en geojson
--- Par site en geojson
-with datas as (
-	select * from (
+with medals as (
 		select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess,
 		1 as hasmedal,
 		count(distinct discipline) nbdisc, count(distinct debut) nbdates, 
@@ -83,7 +105,7 @@ with datas as (
 		from data.paris p
 		where enjeu = 'Médailles' and prix_moyen is not null and jeux = 'Olympiques' 
 		group by lieu 
-		union 
+), no_medals as( 
 		select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess, 
 		0 as hasmedal,
 		count(distinct discipline) nbdisc, count(distinct debut) nbdates, 
@@ -92,14 +114,14 @@ with datas as (
 		from data.paris p
 		where enjeu != 'Médailles' and prix_moyen is not null and jeux = 'Olympiques' 
 		group by lieu 
-	) u
-	order by prix_moy desc
 )
-SELECT json_build_object(
-    'type', 'FeatureCollection',
-    'features', json_agg(ST_AsGeoJSON(t.*)::json)
-    )
-from datas as t
+--select json_agg(x)::json from(
+select nm.ville, nm.lieu, m.prix_moy, nm.prix_moy nm_prix_moy, 
+round(m.prix_moy/ nm.prix_moy,2) as rapport, round((m.prix_moy - nm.prix_moy)/nm.prix_moy,2) * 100 as tx_evol
+from medals m 
+inner join no_medals nm on nm.lieu = m.lieu
+order by m.prix_moy + nm.prix_moy desc
+--) x
 
 -- Par site
 select max(geom)::geometry(POINT, 3857)  geom, lieu, max(ville) ville, count(distinct "session") nbsess, 
@@ -110,3 +132,39 @@ from data.paris p
 where enjeu = 'Médailles' and prix_moyen is not null and jeux = 'Olympiques' 
 group by lieu 
 order by prix_moy desc
+
+
+---------- Evol prix
+
+with datasmed as(
+	select discipline, 1 as has_medal, round(avg(prix_moyen)) prix_moy, round(avg(capacite)) capa_moy, count(distinct session) sessions
+	from data.paris 
+	where discipline != 'Cérémonie' and jeux = 'Olympiques' and prix_moyen is not null and enjeu = 'Médailles'
+	group by discipline 
+), datasnomed as(
+	select discipline, 0 as has_medal, round(avg(prix_moyen)) prix_moy, round(avg(capacite)) capa_moy, count(distinct session) sessions
+	from data.paris 
+	where discipline != 'Cérémonie' and jeux = 'Olympiques' and prix_moyen is not null and enjeu != 'Médailles'
+	group by discipline 
+)
+--select json_agg(z) from (
+select case when has_medal = 1 then 'Médaille' else 'Pas de médaille' end medal, sum(case when prix_moy > 0 and prix_moy <= 50 then capa else 0 end) places_000_050, 
+	   sum(case when prix_moy > 50 and prix_moy <= 100 then capa else 0 end) places_050_100,
+	   sum(case when prix_moy > 100 and prix_moy <= 150 then capa else 0 end) places_100_150,
+	   sum(case when prix_moy > 150 and prix_moy <= 200 then capa else 0 end) places_150_200,
+	   sum(case when prix_moy > 200 and prix_moy <= 250 then capa else 0 end) places_200_250,
+	   sum(case when prix_moy > 250 and prix_moy <= 300 then capa else 0 end) places_250_300,
+	   sum(case when prix_moy > 300 and prix_moy <= 350  then capa else 0 end) places_300_350,
+	   sum(case when prix_moy > 350 and prix_moy <= 400  then capa else 0 end) places_350_400,
+	   sum(case when prix_moy > 400 and prix_moy <= 450  then capa else 0 end) places_400_450,
+	   sum(case when prix_moy > 450 and prix_moy <= 500  then capa else 0 end) places_450_500
+from (
+	select discipline, concat(discipline, ' - ',  prix_moy, '€<br>', 'Sessions:', sessions, '<br>Places moy: ', capa_moy) labels, 
+	has_medal, prix_moy, sessions,  round(capa_moy/1000) capa_moy, sessions*capa_moy capa, capa_moy capa_moy_full
+	from (
+	select * from datasmed
+	union
+	select * from datasnomed
+	) d order by prix_moy desc
+) t group by has_medal
+--) z
