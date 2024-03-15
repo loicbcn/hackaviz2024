@@ -47,7 +47,7 @@ new roughViz.StackedBar(
       xLabel: 'Capacité moyenne du lieu de l\'épreuve (en millier de spectateurs)',
       yLabel: 'Prix moyens des billets (€)',
       margin: { top: 0, left: 100, right: 20, bottom: 50 },
-      //curbZero: false,
+      curbZero: false,
   });  
 
 
