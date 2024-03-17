@@ -1,5 +1,10 @@
 let data_sp = [];
 
+const badges = document.querySelectorAll("span.badge");
+
+badges.forEach((e) =>  {e.style.transform = "rotate(" + randomIntFromInterval(-10,10) +"deg)"});
+
+
 for ( let sp in sites_prix ) {
     const current = sites_prix[sp];
     data_sp.push({
@@ -54,4 +59,10 @@ new roughViz.StackedBar(
 function get_dept(str) {
     const regExp = /\(([^)]+)\)/;
     return regExp.exec(str)[1];
+}
+
+
+
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }

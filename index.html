@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="favico.png">
-    <link rel="shortcut icon" type="image/png" href="favico.png">
+    <link rel="icon" type="image/png" href="anneaux_opt.svg">
+    <link rel="shortcut icon" type="image/png" href="anneaux_opt.svg">
     <link href=" https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/sketchy/bootstrap.min.css " rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minus" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.0.0/ol.css">
@@ -47,18 +47,25 @@
 
         #sites_prix_medals text { font-size: 1rem !important;}
 
+        @media (max-width: 800px) {
+            .anneaux{ width: 50px;}
+        }
     </style>
   </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-3 mb-3">
         <div class="lg-12">
-        <h1>
-            <span class="cross">Dash</span><!--
-            --><span class="minus" style="font-size:3.4rem">Trash</span><!--
-            -->board des jeux Olympiques de <span class="cross">Paris</span> <!--
-            --><span class="minus" style="font-size:3.4rem">bourges</span> 2024
-        </h1>
+            <div class="d-flex align-items-center justify-content-between">
+            <img class="anneaux" src="anneaux_opt.svg" style="margin:0 1rem 0 0;">
+            <h1>
+                <span class="cross">Dash</span><!--
+                --><span class="minus" style="font-size:3.4rem">Trash</span><!--
+                -->board des jeux Olympiques de <span class="cross">Paris</span> <!--
+                --><span class="minus" style="font-size:3.4rem">bourges</span> 2024
+            </h1>
+            <img class="anneaux" src="anneaux_opt.svg" style="margin:0 0 0 1rem;">
+            </div>
         </div>
     </div>
     <!--<div id="map" style="width:400px; height:400px;"></div>-->
@@ -113,7 +120,7 @@
     </p>
     <p>
     Hormis ces disciplines, il faudra ensuite dépenser plus de <span class="badge bg-danger">100€</span> 
-    pour voir des médailles. et ce sera étonnamment du golf à <span class="badge bg-warning text-black">118€</span>.
+    pour voir des médailles. À commencer, étonnamment, par du golf à <span class="badge bg-warning text-black">118€</span>.
 </p>
 
             <div id="scatter_prix_discip" style="width:100%; height:600px;"></div>
@@ -126,7 +133,7 @@
 
 
     <div class="alert alert-dismissible alert-success mt-3 fs-4">
-        Pour conclure, pour bien suivre les JO 2024, bénévole est une option à considérer 
+        Pour conclure, pour suivre les JO 2024 à un prix raisonnable, le bénévolat est une option à considérer 
         <strong style="transform: rotate(-4deg);" class="badge bg-primary minus">Pour bien servir les riches</strong>.
     </div>
 
@@ -140,7 +147,8 @@ J'ai établi ces pondérations à partir des représentations des enceintes four
 <a href="https://tickets.paris2024.org/obj/media/FR-Paris2024/grille-tarifaire.pdf">grille tarifaire</a>, 
 en comptant le nombre de pixels <span style="transform: rotate(-4deg);" class="badge bg-primary minus">a la main</span> pour chaque catégorie.
 Je n'ai conservé qu'une seule répartition des prix qui me semblait raisonnable:<br>
-categorie_first: 10%', categorie_a: 35%, categorie_b: 30%, categorie_c: 15%, categorie_d: 10% ... 
+categorie_first: 10%', categorie_a: 35%, categorie_b: 30%, categorie_c: 15%, categorie_d: 10% ... Le script php est 
+<a href="https://github.com/loicbcn/hackaviz2024/blob/main/docs/moyenne.php">ici</a>.<br>
 Si j'avais eu plus de temps, j'aurais fait mieux.<span style="transform: rotate(4deg);" class="badge bg-primary minus fs-5">Mais bien sur</span>
 <hr>
 <strong>(2) Nombre de places:</strong> Il s'agit d'une estimation, calculée en multipliant 
