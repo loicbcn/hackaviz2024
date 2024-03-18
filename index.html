@@ -5,14 +5,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+    <meta property="og:title" content="Les JO de P̶a̶r̶i̶s̶ Bourges 2024" />
+    <meta property="og:description" content="Bla bla bla ... Les JO pour les plus riches." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/loicbcn/hackaviz2024/main/miniature2.png" />
+    <meta property=”og:image:width” content="500"/>
+    <meta property=”og:image:height content="500"/>
+    <meta property="og:url" content="https://loicbcn.github.io/hackaviz2024//" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="website" />
+
     <link rel="icon" type="image/png" href="anneaux_opt.svg">
     <link rel="shortcut icon" type="image/png" href="anneaux_opt.svg">
     <link href=" https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/sketchy/bootstrap.min.css " rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minus" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.0.0/ol.css">
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.0.0/ol.css"> 
     <link href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.0.0/dist/ol.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.17/dist/ol-ext.min.js"></script>-->
     <script src="https://unpkg.com/rough-viz@2.0.5"></script>
     <script src="data/datas.js?12"></script>
     <style>
@@ -50,9 +60,16 @@
         @media (max-width: 800px) {
             .anneaux{ width: 50px;}
         }
+
+        #miniature{width:500px; height:500px; border:1px solid #000; 
+            background: url(bg.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
     </style>
   </head>
 <body>
+
 <div class="container-fluid">
     <div class="row mt-3 mb-3">
         <div class="lg-12">
@@ -95,6 +112,7 @@
             <div class="text-end">
                 <strong class="badge bg-primary text-black" style="background-color: coral !important;">Épreuves avec obtention de médailles</strong>
                 <strong class="badge bg-primary text-black" style="background-color: skyblue !important;">Épreuves de qualification</strong>
+                <span>V3</span><sup class="minus" style="display:inline-block; transform: rotate(12deg);"><small>Je crois</small></sup>
             </div>
         </div>
     </div>
@@ -127,6 +145,7 @@
             <div class="text-end">
                 <strong class="badge bg-primary text-black" style="background-color: coral !important;">Épreuves avec obtention de médailles</strong>
                 <strong class="badge bg-primary text-black" style="background-color: skyblue !important;">Épreuves de qualification</strong>
+                <span>V3</span><sup class="minus" style="display:inline-block; transform: rotate(-16deg);"><small>Je crois</small></sup>
             </div>
         </div>
     </div>
@@ -158,6 +177,18 @@ Par exemple, pour la voile: capacité moyenne des enceintes: 12262 * 5 sessions 
 
 </div>
 
+</div>
+<div id="miniature" class="d-flex flex-column justify-content-around mx-auto my-5">
+    <div class="d-flex justify-content-center">
+        <img class="anneaux" src="anneaux_opt.svg">
+    </div>
+    <h1 class="text-center">
+    Jeux Olympiques de <br><span class="cross">Paris</span><br>
+    <span class="minus" style="font-size:3.4rem">bourges</span> 2024
+    </h1>
+    <div class="d-flex justify-content-center">
+        <img class="anneaux" src="anneaux_opt.svg">
+    </div>
 </div>
 
 <script type="module" src="js/scripts.js"></script>
