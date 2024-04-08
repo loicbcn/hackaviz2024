@@ -66,6 +66,24 @@
             background-repeat: no-repeat;
             background-size: contain;
         }
+
+        @media print {
+            #sites_prix_medals { height: 70mm!important; overflow: hidden; }
+            #scatter_prix_discip { height: 65mm !important; margin: 15mm 0 15mm 0; }
+            #miniature { width:150mm; height:auto; 
+                        background: url(bg.png);
+                        background-size: cover;
+                        flex-direction: row !important;
+                        border:2px solid #000; 
+                        border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
+                        margin: 4rem auto 0 !important;
+            }
+            #miniature h1 { font-size: 2rem; }
+            #miniature minus { font-size: 2.5rem !important; }
+            #afterscatter { margin:-4rem 0 4rem;}
+            #explic { margin: 4rem 0 !important;}
+        }
+
     </style>
   </head>
 <body>
@@ -142,7 +160,7 @@
 </p>
 
             <div id="scatter_prix_discip" style="width:100%; height:600px;"></div>
-            <div class="text-end">
+            <div id="afterscatter" class="text-end">
                 <strong class="badge bg-primary text-black" style="background-color: coral !important;">Épreuves avec obtention de médailles</strong>
                 <strong class="badge bg-primary text-black" style="background-color: skyblue !important;">Épreuves de qualification</strong>
                 <span>V3</span><sup class="minus" style="display:inline-block; transform: rotate(-16deg);"><small>Je crois</small></sup>
@@ -159,7 +177,7 @@
 
 
 
-<div class="alert alert-primary mt-5">
+<div id="explic" class="alert alert-primary mt-5">
 <strong>(1) Prix moyen:</strong> Pour chaque épreuve, un prix moyen a été calculé. 
 Il s'agit d'une moyenne pondérée des prix des catégories First, A, B, C et D. 
 J'ai établi ces pondérations à partir des représentations des enceintes fournies dans la 
